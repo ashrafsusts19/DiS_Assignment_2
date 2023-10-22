@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+option java_package = "com.ashrafsusts19.grpc";
+
+service user{
+	rpc login(LoginRequest) returns (APIResponse);
+	rpc logout(EmptyMessage) returns (APIResponse);
+	rpc register(RegisterRequest) returns (APIRegisterResponse);
+	rpc update(UpdateRequest) returns (APIUpdateResponse);
+}
+
+
+message UpdateRequest{
+	string username = 1;
+	string password = 2;
+	string email = 3;
+	string phone = 4;
+	string institution = 5;
+}
+
+message LoginRequest{
+	string username = 1;
+	string password = 2;
+}
+
+message APIResponse{
+	string responseMessage = 1;
+	int32 responseCode = 2;
+	string email = 3;
+	string phone = 4;
+	string institution = 5;
+	
+}
+
+
+message APIUpdateResponse{
+	string responseMessage = 1;
+	int32 responseCode = 2;
+}
+
+message EmptyMessage{
+	
+}
+
+message RegisterRequest{
+	string username = 1;
+	string password = 2;
+	string confirmPassword = 3;
+}
+
+
+message APIRegisterResponse{
+	string responseMessage = 1;
+	int32 responseCode = 2;
+}

@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.ashrafsusts19.grpc.User.APIRegisterResponse;
 import com.ashrafsusts19.grpc.User.APIResponse;
+import com.ashrafsusts19.grpc.User.APIUpdateResponse;
 import com.ashrafsusts19.grpc.User.LoginRequest;
 import com.ashrafsusts19.grpc.User.RegisterRequest;
 import com.ashrafsusts19.grpc.User.UpdateRequest;
@@ -119,9 +120,11 @@ public class grpcClient {
 				builder.setPassword(newPassword);
 			}
 			else {
-				builder.setPassword(null);
+				builder.setPassword("");
 			}
+			
 			UpdateRequest updateRequest = builder.build();
+			APIUpdateResponse updateResponse = userStub.update(updateRequest);
 		}
 	}
 	
@@ -145,6 +148,7 @@ public class grpcClient {
 		
 		String _username, _password;
 		Scanner scanner = new Scanner(System.in);
+		System.out.println("");
 		System.out.print("Username: ");
 		_username = scanner.nextLine();
 		System.out.print("Password: ");
@@ -156,6 +160,7 @@ public class grpcClient {
 		
 		
 		System.out.println(apiResponse.getResponseMessage());
+		System.out.println("");
 		if (apiResponse.getResponseCode() == 0) {
 			this.clientEmail = apiResponse.getEmail();
 			this.clientInstitution = apiResponse.getInstitution();
@@ -163,11 +168,15 @@ public class grpcClient {
 			this.clientUsername = _username;
 			this.menuCode = 3;
 		}
+		else {
+			this.menuCode = 0;
+		}
 	}
 	
 	public void userRegister() {
 		String _username, _password, _confirmPassword;
 		Scanner scanner = new Scanner(System.in);
+		System.out.println("");
 		System.out.print("Username: ");
 		_username = scanner.nextLine();
 		System.out.print("Password: ");
@@ -180,6 +189,8 @@ public class grpcClient {
 		
 		APIRegisterResponse apiRegisterResponse = userStub.register(registerRequest);
 		System.out.println(apiRegisterResponse.getResponseMessage());
+		System.out.println("");
+		this.menuCode = 0;
 	}
 	
 }
